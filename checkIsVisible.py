@@ -9,7 +9,7 @@ import win32api
 import win32con
 
 while 1:
-    if pyautogui.locateOnScreen('redSquare.bmp', region=(500, 0, 1200, 800), grayscale=True, confidence=1) != None:
+    if pyautogui.locateOnScreen('./drops/11.png', region=(500, 0, 1200, 800), grayscale=True, confidence=0.6) != None or pyautogui.locateOnScreen('./drops/22.png', region=(500, 0, 1200, 800), grayscale=True, confidence=0.6) != None or pyautogui.locateOnScreen('./drops/33.png', region=(500, 0, 1200, 800), grayscale=True, confidence=0.6) != None or pyautogui.locateOnScreen('./drops/44.png', region=(500, 0, 1200, 800), grayscale=True, confidence=0.6) != None or pyautogui.locateOnScreen('./drops/55.png', region=(500, 0, 1200, 800), grayscale=True, confidence=0.6) != None or pyautogui.locateOnScreen('./drops/66.png', region=(500, 0, 1200, 800), grayscale=True, confidence=0.6) != None:
         print("I can see it")
         time.sleep(0.5)
     else:

@@ -5,6 +5,7 @@ import keyboard
 import random
 import win32api
 import win32con
+import ctypes
 
 time.sleep(2)
 
