@@ -13,18 +13,21 @@ SCT = mss.mss()
 
 
 def check_animal(animal):
-    img = main_screen(height=800)
-    result_animal = cv2.matchTemplate(img, animal, cv2.TM_CCOEFF_NORMED)
+    template_gray = cv2.cvtColor(animal, cv2.COLOR_RGB2GRAY)
+    image_gray = cv2.cvtColor(main_screen(height=800), cv2.COLOR_RGB2GRAY)
+    result_animal = cv2.matchTemplate(
+        image=image_gray, templ=template_gray, method=cv2.TM_CCOEFF_NORMED)
+
     _, max_val, _, max_loc_animal = cv2.minMaxLoc(result_animal)
     # print(max_val)
-    if max_val > .5:
+    if max_val > .66:
+        print(max_val)
         return max_loc_animal
     else:
         return None
 
 
 def Put_Away(animal_name, animals):
-    print(f"Checking for {animal_name}....")
     keep_testing = True
     while keep_testing:
         for animal in animals:
@@ -40,7 +43,7 @@ def Put_Away(animal_name, animals):
                 time.sleep(0.1)
 
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
-                time.sleep(1)
+                time.sleep(2)
 
                 return True
             else:
@@ -52,7 +55,7 @@ def main_screen(height=800):
     scr = SCT.grab({
         'left': left_start,
         'top': top_start,
-        'width': 800,
+        'width': 1100,
         'height': height
     })
     img = np.array(scr)
@@ -69,16 +72,19 @@ if __name__ == "__main__":
         color = main_screen()
 
         pigs = [
-            cv2.imread(os.path.join(animal_path, '1.png'),
+            cv2.imread(os.path.join(animal_path, 'image-left.png'),
                        cv2.IMREAD_UNCHANGED),
-            cv2.imread(os.path.join(animal_path, '2.png'),
+            cv2.imread(os.path.join(animal_path, 'image-right.png'),
+                       cv2.IMREAD_UNCHANGED),
+            cv2.imread(os.path.join(animal_path, 'back-left.png'),
+                       cv2.IMREAD_UNCHANGED),
+            cv2.imread(os.path.join(animal_path, 'back-right.png'),
                        cv2.IMREAD_UNCHANGED),
         ]
 
         #wait = 4
         replay_shown = None
         while replay_shown is None:
-
             while True:
                 Put_Away("Monster", pigs)
                 time.sleep(0.1)
