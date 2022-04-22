@@ -20,7 +20,7 @@ def check_animal(animal):
 
     _, max_val, _, max_loc_animal = cv2.minMaxLoc(result_animal)
     # print(max_val)
-    if max_val > .66:
+    if max_val > .75:
         print(max_val)
         return max_loc_animal
     else:
@@ -29,6 +29,7 @@ def check_animal(animal):
 
 def Put_Away(animal_name, animals):
     keep_testing = True
+    find = False
     while keep_testing:
         for animal in animals:
             animal_loc = check_animal(animal)
@@ -39,15 +40,27 @@ def Put_Away(animal_name, animals):
                 win32api.SetCursorPos((animal_loc[0], animal_loc[1]))
                 time.sleep(0.1)
 
-                win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+                win32api.keybd_event(win32con.VK_F1, 0, 0, 0)
                 time.sleep(0.1)
+                win32api.keybd_event(
+                    win32con.VK_F1, 0, win32con.KEYEVENTF_KEYUP, 0)
 
+                win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, 0, 0)
+
+                time.sleep(0.1)
                 win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, 0, 0)
+
                 time.sleep(2)
 
                 return True
             else:
                 keep_testing = False
+    print('aperta f2')
+    win32api.keybd_event(win32con.VK_F2, 0, 0, 0)
+    win32api.keybd_event(
+        win32con.VK_F2, 0, win32con.KEYEVENTF_KEYUP, 0)
+    time.sleep(1)
+
     return False
 
 
@@ -82,7 +95,7 @@ if __name__ == "__main__":
                        cv2.IMREAD_UNCHANGED),
         ]
 
-        #wait = 4
+        # wait = 4
         replay_shown = None
         while replay_shown is None:
             while True:
