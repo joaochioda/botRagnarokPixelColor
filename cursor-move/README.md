@@ -1,0 +1,1 @@
+Just simple app to move and click mouse

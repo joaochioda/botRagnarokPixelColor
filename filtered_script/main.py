@@ -5,6 +5,7 @@ from time import time
 from time import sleep
 from windowcapture import WindowCapture
 from vision import Vision
+from moveAndClick import MoveClick
 from hsvfilter import HsvFilter
 import win32api
 import win32con
@@ -16,11 +17,11 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
 # initialize the WindowCapture class
 wincap = WindowCapture(
-    'RagnaTales | Gepard Shield 3.0 (^-_-^)')
+    'Live-RO | Gepard Shield 3.0 (^-_-^)')
 # initialize the Vision class
 vision_limestone = Vision('black-mystic2.png')
 # initialize the trackbar window
-vision_limestone.init_control_gui()
+# vision_limestone.init_control_gui()
 
 # limestone HSV filter
 hsv_filter = HsvFilter(0, 124, 0, 179, 255, 255, 0, 0, 0, 0)
@@ -38,11 +39,15 @@ while(True):
     rectangles = vision_limestone.find(processed_image, 0.4)
 
     # draw the detection results onto the original image
-    # output_image = vision_limestone.draw_rectangles(screenshot, rectangles)
+    if (len(rectangles) > 0):
+        MoveClick.click(rectangles[0][0] + 60, rectangles[0][1] + 60)
+        sleep(4)
+
+    output_image = vision_limestone.draw_rectangles(screenshot, rectangles)
 
     # display the processed image
     # cv.imshow('Processed', processed_image)
-    # cv.imshow('Matches', output_image)
+    cv.imshow('Matches', output_image)
 
     # debug the loop rate
     loop_time = time()

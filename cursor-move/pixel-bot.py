@@ -28,6 +28,7 @@ def click(x, y):
 # Color of center: (255, 219, 195)
 # 500, 0, 1200, 800
 
+click(500, 0)
 
 while keyboard.is_pressed('q') == False:
     flag = 0
